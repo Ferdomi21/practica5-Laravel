@@ -12,6 +12,18 @@
         @csrf
         @method('PUT')
         <div class="form-group">
+            <label for="train_name">Nombre del tren</label>
+            <input type="text" class="form-control" id="train_name" name="name" value="{{ $train->name }}">
+        </div>
+        <div class="form-group">
+            <label for="train_passengers">Número de pasajeros</label>
+            <input type="number" class="form-control" id="train_passengers" name="passengers" value="{{ $train->passengers }}">
+        </div>
+        <div class="form-group">
+            <label for="train_year">Año</label>
+            <input type="number" class="form-control" id="train_year" name="year" value="{{ $train->year }}">
+        </div>
+        <div class="form-group">
             <label for="train_type">Tipo de tren</label>
             <select class="form-control" id="train_type" name="train_type_id">
                 @foreach ($trainTypes as $trainType)

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Train;
 use App\Models\Ticket;
 use App\Models\TicketType;
 use App\Models\TrainType;

@@ -14,8 +14,8 @@ class TrainTypeController extends Controller
     {
         $trainTypes = TrainType::all();
 
-        return view('trainTypes.index', [
-            'trainTypes' => $trainTypes]);
+        return view('trainType.index', [
+        'trainTypes' => $trainTypes]);
     }
 
     /**
@@ -23,11 +23,7 @@ class TrainTypeController extends Controller
      */
     public function create()
     {
-        $trainTypes = TrainType::all();
-
-        return view('trains.create', [
-        'trainTypes' => $trainTypes
-        ]);
+        return view('trainType.create');
     }
 
     /**
@@ -35,7 +31,15 @@ class TrainTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'trainType' => 'required',
+        ]);
+    
+        $trainType = new TrainType;
+        $trainType->type = $validated['trainType'];
+        $trainType->save();
+    
+        return redirect()->route('trainTypes.index');
     }
 
     /**
@@ -43,7 +47,10 @@ class TrainTypeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $trainTypes = TrainType::findOrFail($id);
+        return view('trainType.show', [
+            'trainType' => $trainTypes
+        ]);   
     }
 
     /**
@@ -51,7 +58,11 @@ class TrainTypeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $trainType = TrainType::find($id);
+        $allTrainTypes = TrainType::all();
+        return view('trainType.edit', ['trainType' => $trainType, 
+        'allTrainTypes' => $allTrainTypes
+    ]);
     }
 
     /**
@@ -59,7 +70,11 @@ class TrainTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $trainType = TrainType::find($id);
+        $trainType->type = $request->input('type');
+        $trainType->save();
+
+        return redirect('/trainTypes');
     }
 
     /**
@@ -67,6 +82,14 @@ class TrainTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $trainType = TrainType::find($id);
+
+        foreach ($trainType->trains as $train) {
+            $train->delete();
+        }
+
+        $trainType->delete();
+    
+        return redirect('/trainTypes');
     }
 }

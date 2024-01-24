@@ -19,11 +19,11 @@ use App\Http\Controllers\TrainTypeController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::resource('/trains', TrainController::class);
 
-Route::resource('/', TrainController::class);
+Route::resource('/tickets', TicketController::class);
 
-//Route::resource('/', TicketController::class);
+Route::resource('/trainTypes', TrainTypeController::class);
 
-//Route::resource('/', TicketTypeController::class);
+Route::resource('/ticketTypes', TicketTypeController::class);
 
-Route::resource('/trains', TrainTypeController::class);

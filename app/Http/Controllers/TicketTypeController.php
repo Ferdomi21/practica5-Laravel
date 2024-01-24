@@ -13,10 +13,7 @@ class TicketTypeController extends Controller
     public function index()
     {
         $ticketTypes = TicketType::all();
-
-        return view('ticketTypes.index', [
-        'ticketTypes' => $ticketTypes
-        ]);
+        return view('ticketTypes.index', compact('ticketTypes'));
     }
 
     /**
@@ -24,7 +21,7 @@ class TicketTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('ticketTypes.create');
     }
 
     /**
@@ -32,7 +29,11 @@ class TicketTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ticketType = new TicketType;
+        $ticketType->type = $request->input('type');
+        $ticketType->save();
+
+        return redirect('/ticketTypes');
     }
 
     /**
@@ -40,7 +41,8 @@ class TicketTypeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $ticketType = TicketType::find($id);
+        return view('ticketTypes.show', compact('ticketType'));
     }
 
     /**
@@ -48,7 +50,9 @@ class TicketTypeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $ticketType = TicketType::find($id);
+        $allTicketTypes = TicketType::all();
+        return view('ticketTypes.edit', compact('ticketType', 'allTicketTypes'));
     }
 
     /**
@@ -56,7 +60,15 @@ class TicketTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $ticketType = TicketType::find($id);
+        $ticketType->date = $request->input('date');
+        $ticketType->price = $request->input('price');
+        $ticketType->train_id = $request->input('train');
+        $ticketType->ticket_type_id = $request->input('ticketType');
+        $ticketType->save();
+    
+        return redirect('/ticketTypes');
+
     }
 
     /**
@@ -64,6 +76,8 @@ class TicketTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $ticketType = TicketType::find($id);
+        $ticketType->delete();
+        return redirect('/ticketTypes');
     }
 }

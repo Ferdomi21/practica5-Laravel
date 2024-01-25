@@ -14,12 +14,7 @@
         @method('PUT')
         <div class="form-group">
             <label for="type">Tipo de tren</label>
-            <select class="form-control" id="type" name="type">
-                @foreach ($allTrainTypes as $type)
-                <option value="{{ $trainType->id }}" {{ $trainType->id == $type->id ? 'selected' : '' }}>{{ $type->type }}
-                </option>
-                @endforeach
-            </select>
+            <input type="text" class="form-control" id="type" name="type" value="{{ $trainType->type }}">
         </div>
         <button type="submit" class="btn btn-primary">Modificar</button>
     </form>
